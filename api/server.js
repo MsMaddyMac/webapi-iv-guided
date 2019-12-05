@@ -9,9 +9,11 @@ server.use(helmet());
 server.use(express.json());
 
 server.get('/', (req, res) => {
-  Shoutouts.find()
+  const message = process.env.MSG || 'Hello World!'; // this is an object where a system admin can add things to the environment
+
+  Shoutouts.find() 
   .then(shoutouts => {
-    res.status(200).json(shoutouts);
+    res.status(200).json({ message: message, shoutouts });
   })
   .catch (error => {
     console.error('\nERROR', error);
